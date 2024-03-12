@@ -1,0 +1,29 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Quarterly Sales";
+}
+
+<h1>Quarterly Sales</h1>
+<form asp-action="Index" method="post">
+<div class="row mb-2">
+	<div class="col-2">
+		<p>Employee</p>
+	</div>
+	<div class="col-2">
+            @if (ViewBag.Employees != null && ViewBag.Employees.Count > 0)
+            {
+                <select asp-for="EmployeeId" class="form-select"
+                        asp-items="@(new SelectList(ViewBag.Employees, "EmployeeId", "Name"))">
+                    <option value="0">Select an employee...</option>
+                </select>
+            }
+            else
+            {
+                <p>No employees available</p>
+            }
+	</div>
+	<div class="col-2">
+		<button type="submit" class="btn btn-primary mt-2">Select</button>
+	</div>
+</div>
+</form>
