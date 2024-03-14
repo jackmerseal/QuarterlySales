@@ -1,29 +1,59 @@
-﻿@model Employee
+﻿@model List<Sale>
+
 @{
     ViewData["Title"] = "Quarterly Sales";
 }
 
 <h1>Quarterly Sales</h1>
 <form asp-action="Index" method="post">
-<div class="row mb-2">
-	<div class="col-2">
-		<p>Employee</p>
-	</div>
-	<div class="col-2">
-            @if (ViewBag.Employees != null && ViewBag.Employees.Count > 0)
+    <div class="row mb-2">
+        <div class="col-2">
+            <p>Employee</p>
+        </div>
+        <div class="col-2">
+            @if (ViewBag.Sales != null && ViewBag.Sales.Count > 0)
             {
-                <select asp-for="EmployeeId" class="form-select"
-                        asp-items="@(new SelectList(ViewBag.Employees, "EmployeeId", "Name"))">
+                <select class="form-select">
                     <option value="0">Select an employee...</option>
+                    @foreach (var sale in ViewBag.Sales)
+                    {
+                        <option value="@sale.EmployeeId">@sale.EmployeeId</option>
+                    }
                 </select>
             }
             else
             {
                 <p>No employees available</p>
             }
-	</div>
-	<div class="col-2">
-		<button type="submit" class="btn btn-primary mt-2">Select</button>
-	</div>
-</div>
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary mt-2">Filter</button>
+        </div>
+    </div>
 </form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Year</th>
+            <th>Quarter</th>
+            <th>Employee</th>
+            <th>Amount</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @* @foreach (var sale in Model)
+        {
+            <tr>
+                <td>@sale.Year</td>
+                <td>@sale.Quarter</td>
+                <td>@sale.Employee.Name</td>
+                <td>@sale.Amount</td>
+                <td>
+                    <input type="hidden" asp-for="@sale.SaleId" />
+                </td>
+            </tr>
+        } *@
+    </tbody>
+</table>

@@ -13,8 +13,10 @@ namespace QuarterlySales.Controllers
 		[HttpGet]
 		public IActionResult Index()
         {
-            return View();
-        }
+            var employees = _context.Employees.ToList();
+			ViewBag.Employees = employees;
+			return View();
+		}
 
         [HttpPost]
         public IActionResult Index(Employee employee)

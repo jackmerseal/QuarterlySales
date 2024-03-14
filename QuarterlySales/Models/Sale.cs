@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 namespace QuarterlySales.Models
 {
     public class Sale
@@ -14,8 +15,9 @@ namespace QuarterlySales.Models
 		[Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than 0")]
 		public decimal? Amount { get; set; }
 		[Required(ErrorMessage = "Employee is required")]
-		public int? EmployeeId { get; set; }
-        public Employee? Employees { get; set; }
+		public int EmployeeId { get; set; }
+		[ValidateNever]
+		public Employee? Employee { get; set; }
 
 		[UniqueSales(ErrorMessage = "Sales data with the same quarter, year, and employee already exists.")]
 		public Sale UniqueSalesCheck => this;

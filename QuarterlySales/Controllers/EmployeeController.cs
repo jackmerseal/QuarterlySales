@@ -6,25 +6,16 @@ namespace QuarterlySales.Controllers
 {
     public class EmployeeController : Controller
     {
-        private SalesContext _context { get; set; }
+		private const string EMPLOYEE_KEY = "employeeID";
+		private SalesContext _context { get; set; }
         public EmployeeController(SalesContext ctx) => _context = ctx;
 
         [HttpGet]
-        public IActionResult Index() => View();
-
-        [HttpPost]
-        public IActionResult Index(Employee employee)
+        public IActionResult Add()
         {
-            if (ModelState.IsValid)
-            {
-                _context.Employees.Add(employee);
-                _context.SaveChanges();
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return View(employee);
-            }
+            ViewBag.Action = "Add Employee";
+            ViewBag.Employees = _context.Employees.OrderBy(e => e.Firstname).ToList();
+            return View("Add", new Employee());
         }
     }
 }
