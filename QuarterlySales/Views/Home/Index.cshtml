@@ -1,5 +1,4 @@
-﻿@model List<Sale>
-
+﻿@model EmployeeViewModel
 @{
     ViewData["Title"] = "Quarterly Sales";
 }
@@ -11,14 +10,10 @@
             <p>Employee</p>
         </div>
         <div class="col-2">
-            @if (ViewBag.Sales != null && ViewBag.Sales.Count > 0)
+            @if (Model.Employees != null && Model.Employees.Any())
             {
-                <select class="form-select">
+                <select asp-for="@Model.Employee.EmployeeId"asp-items="@(new SelectList(Model.Employees, "EmployeeId", "Name"))" class="form-select">
                     <option value="0">Select an employee...</option>
-                    @foreach (var sale in ViewBag.Sales)
-                    {
-                        <option value="@sale.EmployeeId">@sale.EmployeeId</option>
-                    }
                 </select>
             }
             else
@@ -43,17 +38,17 @@
         </tr>
     </thead>
     <tbody>
-        @* @foreach (var sale in Model)
+        @foreach (var item in Model.Sales)
         {
             <tr>
-                <td>@sale.Year</td>
-                <td>@sale.Quarter</td>
-                <td>@sale.Employee.Name</td>
-                <td>@sale.Amount</td>
+                <td>@item.Year</td>
+                <td>@item.Quarter</td>
+                <td>@item.Employee.Name</td>
+                <td>@item.Amount</td>
                 <td>
-                    <input type="hidden" asp-for="@sale.SaleId" />
+                    <input type="hidden" asp-for="@item.SaleId" />
                 </td>
             </tr>
-        } *@
+        }
     </tbody>
 </table>

@@ -1,5 +1,43 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Employee
 @{
+	ViewBag.Title = "Add Employee";
 }
+<div class="container">
+	<div class="ms-3 mt-2">
+		<h1>Add Employee</h1>
+	</div>
+	<form asp-action="Edit" method="post">
+		<div class="m-3">
+			<label asp-for="Firstname">First Name</label>
+			<input asp-for="Firstname" class="form-control" />
+			<span asp-validation-for="Firstname" class="text-danger"></span>
+		</div>
+		<div class="m-3">
+			<label asp-for="Lastname">Last Name</label>
+			<input asp-for="Lastname" class="form-control" />
+			<span asp-validation-for="Lastname" class="text-danger"></span>
+		</div>
+		<div class="m-3">
+			<label asp-for="Birthdate">Birth Date</label>
+			<input asp-for="Birthdate" class="form-control" />
+			<span asp-validation-for="Birthdate" class="text-danger"></span>
+		</div>
+		<div class="m-3">
+			<label asp-for="Hiredate">Hire Date</label>
+			<input asp-for="Hiredate" class="form-control" />
+			<span asp-validation-for="Hiredate" class="text-danger"></span>
+		</div>
+		<div class="m-3">
+			<label asp-for="ManagerId" class="form-label">Manager</label>
+			<select asp-for="ManagerId" asp-items="@(new SelectList(ViewBag.Employees, "EmployeeId", "Name"))" class="form-select">
+				<option value="" selected>-- Select Employee --</option>
+			</select>
+			<input type="hidden" asp-for="EmployeeId" />
+			<span asp-validation-for="ManagerId" class="text-danger"></span>
+		</div>
+		<div class="m-3">
+			<button type="submit" class="btn btn-success">Add</button>
+			<a asp-controller="Home" asp-action="Cancel" class="btn btn-warning text-white">Cancel</a>
+		</div>
+	</form>
+</div>

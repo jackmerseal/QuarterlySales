@@ -32,5 +32,17 @@ namespace QuarterlySales.Controllers
                 return View(employee);
             }
         }
-    }
+		[HttpGet]
+		public IActionResult Cancel(int id)
+		{
+			if (id == 0)
+			{
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return RedirectToAction("Index", new { id });
+			}
+		}
+	}
 }

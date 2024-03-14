@@ -16,5 +16,6 @@ namespace QuarterlySales.Controllers
 			ViewBag.Sales = _context.Sales.OrderBy(s => s.Quarter).ToList();
 			return View("Add", new Sale());
 		}
+
 	}
 }
