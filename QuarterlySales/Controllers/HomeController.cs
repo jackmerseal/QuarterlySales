@@ -13,9 +13,12 @@ namespace QuarterlySales.Controllers
 		[HttpGet]
 		public IActionResult Index()
         {
-            var employees = _context.Employees.ToList();
-			ViewBag.Employees = employees;
-			return View();
+			var viewModel = new EmployeeViewModel
+			{
+				Employees = _context.Employees.OrderBy(e => e.Firstname).ToList(),
+				Sales = _context.Sales.Include(s => s.Employee).ToList()
+			};
+			return View(viewModel);
 		}
 
         [HttpPost]
