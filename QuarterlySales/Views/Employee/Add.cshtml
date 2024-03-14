@@ -26,15 +26,18 @@
             <span asp-validation-for="Employee.Hiredate" class="text-danger"></span>
         </div>
         <div class="m-3">
-            <label asp-for="Employee.EmployeeId" class="form-label">Manager</label>
-            @{
-                var employees = ViewBag.Employees as SelectList ?? new SelectList(Enumerable.Empty<SelectListItem>());
-            }
-            <select asp-for="Employee.EmployeeId" asp-items="employees" class="form-select">
-                <option value="" selected>-- Select manager --</option>
+            <label asp-for="Employee.ManagerId" class="form-label">Manager</label>
+            <select asp-for="Employee.ManagerId" class="form-select">
+                <option value="0">Select an employee...</option>
+                @foreach (var employee in Model.Employees)
+                {
+                    <option value="@employee.EmployeeId">@employee.Name</option>
+                }
             </select>
             <span asp-validation-for="Employee.ManagerId" class="text-danger"></span>
         </div>
+
+
         <div class="m-3">
             <button type="submit" class="btn btn-primary">Add</button>
             <a asp-controller="Home" asp-action="Cancel" class="btn btn-primary">Cancel</a>
