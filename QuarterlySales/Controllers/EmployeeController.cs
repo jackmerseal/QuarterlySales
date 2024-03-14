@@ -28,7 +28,20 @@ namespace QuarterlySales.Controllers
 		public IActionResult Add()
 		{
 			ViewBag.Action = "Add Employee";
-			return View("Add", new Employee());
+			var viewModel = new EmployeeViewModel();
+			return View("Add", viewModel);
+		}
+
+		[HttpPost]
+		public IActionResult Add(EmployeeViewModel viewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				_context.Add(viewModel.Employee);
+				_context.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			return View(viewModel);
 		}
 	}
 }
