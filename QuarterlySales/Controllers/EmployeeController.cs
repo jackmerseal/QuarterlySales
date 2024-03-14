@@ -31,7 +31,7 @@ namespace QuarterlySales.Controllers
             ViewBag.Action = "Add Employee";
             var viewModel = new EmployeeViewModel
             {
-                Employees = _context.Employees.ToList() // Fetching list of employees
+                Employees = _context.Employees.ToList()
             };
             return View("Add", viewModel);
         }
@@ -41,12 +41,19 @@ namespace QuarterlySales.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(viewModel.Employee);
+                if(viewModel.EmployeeId == 0)
+                {
+                    _context.Add(viewModel.Employee);
+                }
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            viewModel.Employees = _context.Employees.ToList(); // Fetching list of employees again
-            return View(viewModel);
+            else
+            {
+                ViewBag.Action = "Add Employee";
+                viewModel.Employees = _context.Employees.ToList();
+                return View("Add", viewModel);
+            }
         }
     }
 }
