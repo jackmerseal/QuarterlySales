@@ -28,7 +28,6 @@ namespace QuarterlySales.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            ViewBag.Action = "Add Employee";
             var viewModel = new EmployeeViewModel
             {
                 Employees = _context.Employees.ToList()
@@ -48,12 +47,8 @@ namespace QuarterlySales.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            else
-            {
-                ViewBag.Action = "Add Employee";
                 viewModel.Employees = _context.Employees.ToList();
                 return View("Add", viewModel);
-            }
         }
     }
 }
