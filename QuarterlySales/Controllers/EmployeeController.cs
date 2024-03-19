@@ -25,30 +25,24 @@ namespace QuarterlySales.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        public IActionResult Add()
-        {
-            var viewModel = new EmployeeViewModel
-            {
-                Employees = _context.Employees.ToList()
-            };
-            return View("Add", viewModel);
-        }
+		[HttpGet]
+		public IActionResult Add()
+		{
+			var vm = new EmployeeViewModel();
+			vm.Employees = _context.Employees.ToList();
+			return View(vm);
+		}
 
-        [HttpPost]
-        public IActionResult Add(EmployeeViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                if(viewModel.EmployeeId == 0)
-                {
-                    _context.Add(viewModel.Employee);
-                }
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-                viewModel.Employees = _context.Employees.ToList();
-                return View("Add", viewModel);
-        }
-    }
+		[HttpPost]
+		public IActionResult Add(EmployeeViewModel vm)
+		{
+			if (vm.Employee.EmployeeId != null)
+			{
+				_context.Employees.Add(vm.Employee);
+				_context.SaveChanges();
+				return RedirectToAction("Index", "Home");
+			}
+			return View(vm);
+		}
+	}
 }

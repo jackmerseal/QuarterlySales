@@ -20,17 +20,13 @@ namespace QuarterlySales.Controllers
 		[HttpPost]
 		public IActionResult Add(SaleViewModel vm)
 		{
-			if (ModelState.IsValid)
-			{
-				if (vm.SaleId == 0)
+				if (vm.Sale.SaleId != null)
 				{
 					_context.Sales.Add(vm.Sale);
+					_context.SaveChanges();
+					return RedirectToAction("Index", "Home");
 				}
-				_context.SaveChanges();
-				return RedirectToAction("Index");
-			}
-			return View(vm);
+				return View(vm);
 		}
-
 	}
 }
