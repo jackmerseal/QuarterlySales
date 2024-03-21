@@ -12,7 +12,7 @@ namespace QuarterlySales.Models
 		[Range(2001, int.MaxValue, ErrorMessage = "Year must be after the year 2000")]
 		public int Year { get; set; }
 		[Required(ErrorMessage = "Amount is required")]
-		[Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than 0")]
+		[Range(0, double.MaxValue, ErrorMessage = "Amount must be greater than 0")]
 		public decimal? Amount { get; set; }
 		[Required(ErrorMessage = "Employee is required")]
 		public int EmployeeId { get; set; }
