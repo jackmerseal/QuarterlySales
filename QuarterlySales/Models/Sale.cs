@@ -19,6 +19,22 @@ namespace QuarterlySales.Models
 		[ValidateNever]
 		public Employee? Employee { get; set; }
 
+		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			var sale = (Sale)validationContext.ObjectInstance;
+			var salesContext = (SalesContext)validationContext.GetService(typeof(SalesContext));
+			var existingSale = salesContext.Sales.FirstOrDefault(s =>
+			s.Quarter == sale.Quarter &&
+			s.Year == sale.Year &&
+			s.EmployeeId == sale.EmployeeId &&
+			s.SaleId != sale.SaleId);
+
+			if(existingSale != null)
+			{
+				yield return new ValidationResult("Sales data with the same quarter, year, and employee already exists.", new[]{nameof(Quarter), nameof(Year), nameof(EmployeeId) });
+			}
+		}
+
 		[UniqueSales(ErrorMessage = "Sales data with the same quarter, year, and employee already exists.")]
 		public class UniqueSalesAttribute : ValidationAttribute
 		{
