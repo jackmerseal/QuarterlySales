@@ -14,8 +14,9 @@ namespace QuarterlySales.Models
 		public DateTime? Birthdate { get; set; }
         [Required(ErrorMessage = "Hiredate is required.")]
 		[PastDate(ErrorMessage = "Date of hire must be in the past.")]
-		[PastEarliestHireDateAttribute(ErrorMessage = "Date of hire must not be before 1/1/1995.")]
+		[PastEarliestHireDate(ErrorMessage = "Date of hire must not be before 1/1/1995.")]
 		public DateTime? Hiredate { get; set; }
         public int ManagerId { get; set; }
+
 	}
 }
