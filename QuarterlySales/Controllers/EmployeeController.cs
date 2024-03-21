@@ -36,16 +36,21 @@ namespace QuarterlySales.Controllers
 		[HttpPost]
 		public IActionResult Add([FromForm] EmployeeViewModel vm)
 		{
-			if(vm.Employee != null)
-			{
-				vm.Employee = new Employee();
-				if (ModelState.IsValid)
+				if (vm.Employee != null)
 				{
-					_context.Employees.Add(vm);
+				vm.Employee = new Employee
+				{
+					Firstname = vm.Employee.Firstname,
+					Lastname = vm.Employee.Lastname,
+					Birthdate = vm.Employee.Birthdate.Value,
+					Hiredate = vm.Employee.Hiredate.Value,
+					ManagerId = vm.Employee.ManagerId
+				};
+
+					_context.Employees.Add(vm.Employee);
 					_context.SaveChanges();
 					return RedirectToAction("Index", "Home");
 				}
-			}
 			vm.Employees = _context.Employees.ToList();
 			return View(vm);
 		}
