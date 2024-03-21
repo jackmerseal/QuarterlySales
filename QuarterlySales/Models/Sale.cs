@@ -20,6 +20,20 @@ namespace QuarterlySales.Models
 		public Employee? Employee { get; set; }
 
 		[UniqueSales(ErrorMessage = "Sales data with the same quarter, year, and employee already exists.")]
+		public class UniqueSalesAttribute : ValidationAttribute
+		{
+			protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+			{
+				var sale = (Sale)validationContext.ObjectInstance;
+				var saleContext = (SalesContext)validationContext.GetService(typeof(SalesContext));
+				var sales = saleContext.Sales.Where(s => s.Quarter == sale.Quarter).ToList();
+
+				sales = sales.Where(s => s.SaleId != sale.SaleId).ToList();
+			
+				
+			}
+		}
+		
 		public Sale UniqueSalesCheck => this;
 	}
 }
