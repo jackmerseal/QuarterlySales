@@ -42,11 +42,13 @@ namespace QuarterlySales.Models
 			{
 				var sale = (Sale)validationContext.ObjectInstance;
 				var saleContext = (SalesContext)validationContext.GetService(typeof(SalesContext));
-				var sales = saleContext.Sales.Where(s => s.Quarter == sale.Quarter).ToList();
+				var existingSale = saleContext.Sales.FirstOrDefault(s =>s.Quarter == sale.Quarter && s.Year == sale.Year && s.EmployeeId == sale.EmployeeId && s.SaleId != sale.SaleId);
 
-				sales = sales.Where(s => s.SaleId != sale.SaleId).ToList();
-			
-				
+				if (existingSale != null && existingSale.SaleId != sale.SaleId)
+				{
+					return new ValidationResult(ErrorMessage);
+				}
+				return ValidationResult.Success;
 			}
 		}
 		
