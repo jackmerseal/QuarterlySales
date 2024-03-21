@@ -33,37 +33,19 @@ namespace QuarterlySales.Models
 			}
 		}
 
-		public class PastDateAttribute : ValidationAttribute, IClientModelValidator
+		public class PastDateAttribute : ValidationAttribute
 		{
-			public void AddValidation(ClientModelValidationContext ctx)
-			{
-				if (!ctx.Attributes.ContainsKey("data-val"))
-				{
-					ctx.Attributes.Add("data-val", "true");
-				}
-				ctx.Attributes.Add("data-val-pastdate", "Date must be in the past");
-			}
-
 			protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 			{
-				if (value != null)
+				if (value != null && (DateTime)value < DateTime.Now)
 				{
-					if ((DateTime)value < DateTime.Now)
-					{
-						return ValidationResult.Success!;
-					}
-					else
-					{
-						return new ValidationResult("Date must be in the past");
-					}
+					return ValidationResult.Success;
 				}
-				else
-				{
-					return new ValidationResult("Date is required");
-				}
+				return new ValidationResult("Date must be in the past");
 			}
+		}
 
-			public class UniqueEmployeeAttribute : ValidationAttribute
+		public class UniqueEmployeeAttribute : ValidationAttribute
 			{
 				protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
 				{
@@ -100,6 +82,4 @@ namespace QuarterlySales.Models
 				}
 			}
 		}
-
 	}
-}
