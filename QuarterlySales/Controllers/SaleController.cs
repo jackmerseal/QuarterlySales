@@ -12,9 +12,26 @@ namespace QuarterlySales.Controllers
 		[HttpGet]
 		public IActionResult Add()
 		{
-			ViewBag.Action = "Add Sale";
-			ViewBag.Sales = _context.Sales.OrderBy(s => s.Quarter).ToList();
-			return View("Add", new Sale());
+			var vm = new SaleViewModel();
+			vm.Employees = _context.Employees.ToList();
+			return View(vm);
+		}
+
+		[HttpPost]
+		public IActionResult Add([FromForm] SaleViewModel vm)
+		{
+			if (vm.Sale != null)
+			{
+				vm.Sale = new Sale();
+			}
+			if (ModelState.IsValid)
+			{
+				_context.Sales.Add(vm.Sale);
+				_context.SaveChanges();
+				return RedirectToAction("Index", "Home");
+			}
+			vm.Employees = _context.Employees.ToList();
+			return View(vm);
 		}
 
 	}

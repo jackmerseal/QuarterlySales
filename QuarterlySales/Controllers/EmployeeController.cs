@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using QuarterlySales.Models;
 
 namespace QuarterlySales.Controllers
@@ -25,35 +27,35 @@ namespace QuarterlySales.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        public IActionResult Add()
-        {
-            ViewBag.Action = "Add Employee";
-            var viewModel = new EmployeeViewModel
-            {
-                Employees = _context.Employees.ToList()
-            };
-            return View("Add", viewModel);
-        }
+		[HttpGet]
+		public IActionResult Add()
+		{
+			var vm = new EmployeeViewModel();
+			vm.Employees = _context.Employees.ToList();
+			return View(vm);
+		}
 
-        [HttpPost]
-        public IActionResult Add(EmployeeViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                if(viewModel.EmployeeId == 0)
-                {
-                    _context.Add(viewModel.Employee);
-                }
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ViewBag.Action = "Add Employee";
-                viewModel.Employees = _context.Employees.ToList();
-                return View("Add", viewModel);
-            }
-        }
-    }
+		[HttpPost]
+		public IActionResult Add(EmployeeViewModel vm)
+		{
+			if (ModelState.IsValid)
+			{
+				var newEmployee = new Employee
+				{
+					EmployeeId = vm.EmployeeId,
+					Firstname = vm.Employee.Firstname,
+					Lastname = vm.Employee.Lastname,
+					Birthdate = vm.Employee.Birthdate,
+					Hiredate = vm.Employee.Hiredate,
+					ManagerId = vm.Employee.ManagerId
+				};
+
+				_context.Employees.Add(newEmployee);
+				_context.SaveChanges();
+				return RedirectToAction("Index", "Home");
+			}
+			vm.Employees = _context.Employees.ToList();
+			return View(vm);
+		}
+	}
 }

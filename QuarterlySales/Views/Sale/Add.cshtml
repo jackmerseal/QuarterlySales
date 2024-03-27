@@ -1,39 +1,41 @@
-﻿@model Sale
+﻿@model QuarterlySales.Models.SaleViewModel
 @{
 	ViewBag.Title = "Add Sale";
 }
 <div class="container">
 	<div class="ms-3 mt-2">
-		<h1>Add Employee</h1>
+		<h1>Add Sale</h1>
 	</div>
-	<form asp-action="Edit" method="post">
+	<form asp-controller="Sale" asp-action="Add" method="post">
 		<div class="m-3">
-			<label asp-for="Quarter">Quarter</label>
-			<input asp-for="Quarter" class="form-control" />
-			<span asp-validation-for="Quarter" class="text-danger"></span>
+			<label asp-for="Sale.Quarter">Quarter</label>
+			<input asp-for="Sale.Quarter" class="form-control" />
+			<span asp-validation-for="Sale.Quarter" class="text-danger"></span>
 		</div>
 		<div class="m-3">
-			<label asp-for="Year">Year</label>
-			<input asp-for="Year" class="form-control" />
-			<span asp-validation-for="Year" class="text-danger"></span>
+			<label asp-for="Sale.Year">Year</label>
+			<input asp-for="Sale.Year" class="form-control" />
+			<span asp-validation-for="Sale.Year" class="text-danger"></span>
 		</div>
 		<div class="m-3">
-			<label asp-for="Amount">Amount</label>
-			<input asp-for="Amount" class="form-control" />
-			<span asp-validation-for="Amount" class="text-danger"></span>
+			<label asp-for="Sale.Amount">Amount</label>
+			<input asp-for="Sale.Amount" class="form-control" />
+			<span asp-validation-for="Sale.Amount" class="text-danger"></span>
 		</div>
 		<div class="m-3">
-			<label asp-for="EmployeeId" class="form-label">Employee</label>
-			<select asp-for="EmployeeId" asp-items="@(new SelectList(ViewBag.Employees, "EmployeeId", "Name"))" class="form-select">
-				<option value="" selected>-- Select Employee --</option>
+			<label asp-for="Sale.EmployeeId" class="form-label">Employee</label>
+			<select asp-for="Sale.EmployeeId" class="form-select">
+				<option value="0">Select an employee...</option>
+				@foreach (var employee in Model.Employees)
+				{
+					<option value="@employee.EmployeeId">@employee.Name</option>
+				}
 			</select>
-			<input type="hidden" asp-for="EmployeeId" />
-			<span asp-validation-for="EmployeeId" class="text-danger"></span>
+			<span asp-validation-for="Sale.EmployeeId" class="text-danger"></span>
 		</div>
 		<div class="m-3">
-			<button type="submit" class="btn btn-success">Add</button>
-			<a asp-controller="Home" asp-action="Cancel" class="btn btn-warning text-white">Cancel</a>
+			<button type="submit" class="btn btn-primary">Add</button>
+			<a asp-controller="Home" asp-action="Cancel" class="btn btn-primary">Cancel</a>
 		</div>
 	</form>
 </div>
-
