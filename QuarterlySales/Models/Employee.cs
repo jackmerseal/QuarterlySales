@@ -19,7 +19,11 @@ namespace QuarterlySales.Models
 		public DateTime? Hiredate { get; set; }
 		[Required(ErrorMessage = "Manager is required.")]
 		[UniqueManager(ErrorMessage = "Manager and employee can't be the same person.")]
+<<<<<<< HEAD
 		public int ManagerId { get; set; }
+=======
+        public int ManagerId { get; set; }
+>>>>>>> 39d7a07e75018d3603d9f9a503825004aef1fdf2
 
 		public class PastEarliestHireDateAttribute : ValidationAttribute
 		{
@@ -41,11 +45,16 @@ namespace QuarterlySales.Models
 				{
 					return ValidationResult.Success;
 				}
+<<<<<<< HEAD
 				return new ValidationResult("Date must be in the past.");
+=======
+				return new ValidationResult("Date must be in the past");
+>>>>>>> 39d7a07e75018d3603d9f9a503825004aef1fdf2
 			}
 		}
 
 		public class UniqueEmployeeAttribute : ValidationAttribute
+<<<<<<< HEAD
 		{
 			protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
 			{
@@ -83,3 +92,42 @@ namespace QuarterlySales.Models
 		}
 	}
 }
+=======
+			{
+				protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
+				{
+					var employee = (Employee)validationContext.ObjectInstance;
+					var salesContext = (SalesContext)validationContext.GetService(typeof(SalesContext));
+					var existingEmployee = salesContext.Employees.FirstOrDefault(e => e.Firstname == employee.Firstname &&
+																				 e.Lastname == employee.Lastname &&
+																				 e.Birthdate == employee.Birthdate);
+
+					if(existingEmployee != null && existingEmployee.EmployeeId != employee.EmployeeId) 
+					{
+						return new ValidationResult($"{employee.Firstname} {employee.Lastname} (DOB: {employee.Birthdate} is already in the database.");
+					}
+					return ValidationResult.Success!;
+				}		
+			}
+
+			public class UniqueManagerAttribute : ValidationAttribute
+			{
+				protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+				{
+					var employee = (Employee)validationContext.ObjectInstance;
+					var salesContext = (SalesContext)validationContext.GetService(typeof(SalesContext));
+					var existingManager = salesContext.Employees.FirstOrDefault(e => e.EmployeeId == employee.ManagerId &&
+																				 e.Firstname == employee.Firstname &&
+																				 e.Lastname == employee.Lastname &&
+																				 e.Birthdate == employee.Birthdate);
+
+					if (existingManager != null)
+					{
+						return new ValidationResult("Manager and employee can't be the same person.");
+					}
+					return ValidationResult.Success!;
+				}
+			}
+		}
+	}
+>>>>>>> 39d7a07e75018d3603d9f9a503825004aef1fdf2

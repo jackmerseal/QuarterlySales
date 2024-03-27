@@ -15,6 +15,7 @@ namespace QuarterlySales.Controllers
 			var vm = new SaleViewModel();
 			vm.Employees = _context.Employees.ToList();
 			return View(vm);
+<<<<<<< HEAD
 		}
 
 		[HttpPost]
@@ -32,7 +33,25 @@ namespace QuarterlySales.Controllers
 			}
 			vm.Employees = _context.Employees.ToList();
 			return View(vm);
+=======
+>>>>>>> 39d7a07e75018d3603d9f9a503825004aef1fdf2
 		}
 
+		[HttpPost]
+		public IActionResult Add([FromForm] SaleViewModel vm)
+		{
+			if (vm.Sale != null)
+			{
+				vm.Sale = new Sale();
+			}
+			if(ModelState.IsValid)
+			{ 
+				_context.Sales.Add(vm.Sale);
+				_context.SaveChanges();
+				return RedirectToAction("Index", "Home");
+			}
+			vm.Employees = _context.Employees.ToList();
+			return View(vm);
+		}
 	}
 }
