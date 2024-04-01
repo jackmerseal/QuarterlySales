@@ -8,6 +8,7 @@
         public Sale Sale { get; set; }
         public int EmployeeId { get; set; }
         public int SaleId { get; set; }
+        public int SelectedEmployeeId { get; set; }
 
         public EmployeeViewModel()
         {

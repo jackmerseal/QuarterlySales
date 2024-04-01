@@ -22,19 +22,18 @@ namespace QuarterlySales.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index( Employee employee )
+        public IActionResult Index( int employeeId )
         {
-            if (ModelState.IsValid)
+            var viewModel = new EmployeeViewModel
             {
-                _context.Employees.Add(employee);
-                _context.SaveChanges();
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return View(employee);
-            }
+                Employees = _context.Employees.OrderBy(e => e.Firstname).ToList(),
+                Sales = _context.Sales.Include(s => s.Employee)
+                                      .Where(s => s.EmployeeId == employeeId)
+                                      .ToList()
+            };
+            return View(viewModel);
         }
+
 
         [HttpGet]
         public IActionResult Cancel( int id )
