@@ -12,9 +12,9 @@
         <div class="col-2">
             @if (Model.Employees != null && Model.Employees.Any())
             {
-                <select asp-for="@Model.Employee.EmployeeId"asp-items="@(new SelectList(Model.Employees, "EmployeeId", "Name"))" class="form-select">
+                 <select asp-for="@Model.Employee.EmployeeId"asp-items="@(new SelectList(Model.Employees, "EmployeeId", "Name"))" class="form-select">
                     <option value="0">Select an employee...</option>
-                </select>
+                 </select>
             }
             else
             {

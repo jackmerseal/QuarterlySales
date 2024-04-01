@@ -5,13 +5,13 @@ using System.Diagnostics;
 
 namespace QuarterlySales.Controllers
 {
-	public class HomeController : Controller
-	{
-		private SalesContext _context { get; set; }
-		public HomeController(SalesContext ctx) => _context = ctx;
+    public class HomeController : Controller
+    {
+        private SalesContext _context { get; set; }
+        public HomeController(SalesContext ctx) => _context = ctx;
 
-		[HttpGet]
-		public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index()
         {
 			var viewModel = new EmployeeViewModel
 			{
@@ -20,32 +20,34 @@ namespace QuarterlySales.Controllers
 			};
 			return View(viewModel);
 		}
+	
 
-        [HttpPost]
-        public IActionResult Index(Employee employee)
+	[HttpPost]
+	public IActionResult Index( Employee employee )
+	{
+		if (ModelState.IsValid)
+		{
+			_context.Employees.Add(employee);
+			_context.SaveChanges();
+			return RedirectToAction("Index", "Home");
+		}
+		else
+		{
+			return View(employee);
+		}
+	}
+
+	[HttpGet]
+        public IActionResult Cancel(int id)
         {
-            if (ModelState.IsValid)
+            if (id == 0)
             {
-                _context.Employees.Add(employee);
-                _context.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
             else
             {
-                return View(employee);
+                return RedirectToAction("Index", new { id });
             }
         }
-		[HttpGet]
-		public IActionResult Cancel(int id)
-		{
-			if (id == 0)
-			{
-				return RedirectToAction("Index");
-			}
-			else
-			{
-				return RedirectToAction("Index", new { id });
-			}
-		}
-	}
+    }
 }

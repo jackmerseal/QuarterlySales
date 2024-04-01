@@ -29,15 +29,9 @@ namespace QuarterlySales.Models
 			s.EmployeeId == sale.EmployeeId &&
 			s.SaleId != sale.SaleId);
 
-<<<<<<< HEAD
 			if (existingSale != null)
 			{
 				yield return new ValidationResult("Sales data with the same quarter, year, and employee already exists.", new[] { nameof(Quarter), nameof(Year), nameof(EmployeeId) });
-=======
-			if(existingSale != null)
-			{
-				yield return new ValidationResult("Sales data with the same quarter, year, and employee already exists.", new[]{nameof(Quarter), nameof(Year), nameof(EmployeeId) });
->>>>>>> 39d7a07e75018d3603d9f9a503825004aef1fdf2
 			}
 		}
 
@@ -47,7 +41,6 @@ namespace QuarterlySales.Models
 			protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 			{
 				var sale = (Sale)validationContext.ObjectInstance;
-<<<<<<< HEAD
 				var salesContext = (SalesContext)validationContext.GetService(typeof(SalesContext));
 				var existingSale = salesContext.Sales.FirstOrDefault(s => s.SaleId == sale.SaleId &&
 																			 s.Quarter == sale.Quarter &&
@@ -63,19 +56,6 @@ namespace QuarterlySales.Models
 			}
 		}
 
-=======
-				var saleContext = (SalesContext)validationContext.GetService(typeof(SalesContext));
-				var existingSale = saleContext.Sales.FirstOrDefault(s =>s.Quarter == sale.Quarter && s.Year == sale.Year && s.EmployeeId == sale.EmployeeId && s.SaleId != sale.SaleId);
-
-				if (existingSale != null && existingSale.SaleId != sale.SaleId)
-				{
-					return new ValidationResult(ErrorMessage);
-				}
-				return ValidationResult.Success;
-			}
-		}
-		
->>>>>>> 39d7a07e75018d3603d9f9a503825004aef1fdf2
 		public Sale UniqueSalesCheck => this;
 	}
 }

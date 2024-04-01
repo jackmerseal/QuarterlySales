@@ -7,25 +7,25 @@ using QuarterlySales.Models;
 
 namespace QuarterlySales.Controllers
 {
-    public class EmployeeController : Controller
-    {
-        private SalesContext _context;
+	public class EmployeeController : Controller
+	{
+		private SalesContext _context;
 
-        public EmployeeController(SalesContext context)
-        {
-            _context = context;
-        }
+		public EmployeeController( SalesContext context )
+		{
+			_context = context;
+		}
 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            var viewModel = new EmployeeViewModel
-            {
-                Employees = _context.Employees.OrderBy(e => e.Firstname).ToList(),
-                Sales = _context.Sales.Include(s => s.Employee).ToList()
-            };
-            return View(viewModel);
-        }
+		[HttpGet]
+		public IActionResult Index()
+		{
+			var viewModel = new EmployeeViewModel
+			{
+				Employees = _context.Employees.OrderBy(e => e.Firstname).ToList(),
+				Sales = _context.Sales.Include(s => s.Employee).ToList()
+			};
+			return View(viewModel);
+		}
 
 		[HttpGet]
 		public IActionResult Add()
@@ -36,7 +36,7 @@ namespace QuarterlySales.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Add(EmployeeViewModel vm)
+		public IActionResult Add( EmployeeViewModel vm )
 		{
 			if (ModelState.IsValid)
 			{
@@ -54,17 +54,9 @@ namespace QuarterlySales.Controllers
 				_context.SaveChanges();
 				return RedirectToAction("Index", "Home");
 			}
-<<<<<<< HEAD
 			vm.Employees = _context.Employees.ToList();
 			return View(vm);
 		}
-=======
-
-			// If ModelState is invalid, return the view with the same model
-			vm.Employees = _context.Employees.ToList();
-			return View(vm);
-		}
-
 
 		//private void AddErrorMessages(EmployeeViewModel vm)
 		//{
@@ -105,7 +97,5 @@ namespace QuarterlySales.Controllers
 		//		ModelState.AddModelError("Employee.ManagerId", "Manager is required.");
 		//	}
 		//}
-
->>>>>>> 39d7a07e75018d3603d9f9a503825004aef1fdf2
 	}
 }
