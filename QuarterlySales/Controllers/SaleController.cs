@@ -18,19 +18,24 @@ namespace QuarterlySales.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add( [FromForm] SaleViewModel vm )
+        public IActionResult Add( [FromForm] Sale sale )
         {
-            if (vm.Sale != null)
-            {
-                vm.Sale = new Sale();
-            }
             if (ModelState.IsValid)
             {
-                _context.Sales.Add(vm.Sale);
+                if (sale.SaleId == 0)
+                {
+                    _context.Sales.Add(sale);
+                }
                 _context.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
-            vm.Employees = _context.Employees.ToList();
+
+            var vm = new SaleViewModel
+            {
+                Sale = sale,
+                Employees = _context.Employees.ToList()
+            };
+
             return View(vm);
         }
     }

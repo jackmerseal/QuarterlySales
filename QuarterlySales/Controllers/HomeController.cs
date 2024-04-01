@@ -21,7 +21,6 @@ namespace QuarterlySales.Controllers
             return View(viewModel);
         }
 
-
         [HttpPost]
         public IActionResult Index( Employee employee )
         {
