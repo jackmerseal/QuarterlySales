@@ -2,7 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using QuarterlySales.Models;
+using QuarterlySales.Models.ViewModels;
+using QuarterlySales.Models.DomainModels;
 
 namespace Bookstore.Controllers
 {

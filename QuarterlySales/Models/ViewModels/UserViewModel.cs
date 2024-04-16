@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using QuarterlySales.Models.DomainModels;
 
-namespace QuarterlySales.Models
+namespace QuarterlySales.Models.ViewModels
 {
     public class UserViewModel
     {

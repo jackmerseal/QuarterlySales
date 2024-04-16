@@ -12,7 +12,7 @@ using QuarterlySales.Models;
 namespace QuarterlySales.Migrations
 {
     [DbContext(typeof(SalesContext))]
-    [Migration("20240416161608_initial")]
+    [Migration("20240416163016_initial")]
     partial class initial
     {
         /// <inheritdoc />

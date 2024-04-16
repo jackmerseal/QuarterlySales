@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuarterlySales.Models;
+using QuarterlySales.Models.DomainModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace QuarterlySales.Controllers

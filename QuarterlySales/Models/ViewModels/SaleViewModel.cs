@@ -1,4 +1,6 @@
-﻿namespace QuarterlySales.Models
+﻿using QuarterlySales.Models.DomainModels;
+
+namespace QuarterlySales.Models.ViewModels
 {
     public class SaleViewModel : Sale
     {

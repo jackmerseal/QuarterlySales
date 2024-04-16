@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using QuarterlySales.Models;
+using QuarterlySales.Models.DomainModels;
 
 namespace QuarterlySales.Controllers
 {

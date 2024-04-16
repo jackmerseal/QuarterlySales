@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using QuarterlySales.Models;
 using Microsoft.AspNetCore.Identity;
+using QuarterlySales.Models.ViewModels;
+using QuarterlySales.Models.DomainModels;
 
 namespace QuarterlySales.Areas.Admin.Controllers
 {

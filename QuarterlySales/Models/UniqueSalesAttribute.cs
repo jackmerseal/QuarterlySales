@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using QuarterlySales.Models.DomainModels;
 
 namespace QuarterlySales.Models
 {
-	public class UniqueSalesAttribute : ValidationAttribute
+    public class UniqueSalesAttribute : ValidationAttribute
 	{
 		protected override ValidationResult IsValid( object value, ValidationContext validationContext )
 		{

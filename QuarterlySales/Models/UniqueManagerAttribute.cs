@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using QuarterlySales.Models.DomainModels;
 
 namespace QuarterlySales.Models
 {

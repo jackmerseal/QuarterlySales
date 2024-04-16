@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuarterlySales.Models;
 using Microsoft.AspNetCore.Identity;
+using QuarterlySales.Models.DomainModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapAreaControllerRoute(
     name: "admin",
     areaName: "Admin",

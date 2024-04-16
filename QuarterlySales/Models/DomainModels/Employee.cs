@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
-namespace QuarterlySales.Models
+namespace QuarterlySales.Models.DomainModels
 {
     public class Employee
     {
@@ -23,7 +23,7 @@ namespace QuarterlySales.Models
 
         public class PastEarliestHireDateAttribute : ValidationAttribute
         {
-            public override bool IsValid( object value )
+            public override bool IsValid(object value)
             {
                 if (value is DateTime date)
                 {
@@ -35,7 +35,7 @@ namespace QuarterlySales.Models
 
         public class PastDateAttribute : ValidationAttribute
         {
-            protected override ValidationResult IsValid( object value, ValidationContext validationContext )
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
             {
                 if (value != null && (DateTime)value < DateTime.Now)
                 {
@@ -47,7 +47,7 @@ namespace QuarterlySales.Models
 
         public class UniqueEmployeeAttribute : ValidationAttribute
         {
-            protected override ValidationResult IsValid( object? value, ValidationContext validationContext )
+            protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
             {
                 var employee = (Employee)validationContext.ObjectInstance;
                 var salesContext = (SalesContext)validationContext.GetService(typeof(SalesContext));
@@ -65,7 +65,7 @@ namespace QuarterlySales.Models
 
         public class UniqueManagerAttribute : ValidationAttribute
         {
-            protected override ValidationResult IsValid( object value, ValidationContext validationContext )
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
             {
                 var employee = (Employee)validationContext.ObjectInstance;
                 var salesContext = (SalesContext)validationContext.GetService(typeof(SalesContext));
