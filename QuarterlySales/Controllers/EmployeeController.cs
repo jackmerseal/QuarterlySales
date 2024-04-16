@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using QuarterlySales.Models;
 using QuarterlySales.Models.DomainModels;
+using QuarterlySales.Models.ViewModels;
 
 namespace QuarterlySales.Controllers
 {

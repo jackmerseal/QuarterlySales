@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using QuarterlySales.Models.DomainModels;
+﻿using QuarterlySales.Models.DomainModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace QuarterlySales.Models.ViewModels
 {

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuarterlySales.Models;
+using QuarterlySales.Models.ViewModels;
 using System.Diagnostics;
 
 namespace QuarterlySales.Controllers
