@@ -17,7 +17,7 @@ namespace QuarterlySales.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -86,8 +86,7 @@ namespace QuarterlySales.Migrations
                         .IsRequired()
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("EmployeeId")
-                        .IsRequired()
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quarter")
@@ -123,13 +122,13 @@ namespace QuarterlySales.Migrations
 
             modelBuilder.Entity("QuarterlySales.Models.Sale", b =>
                 {
-                    b.HasOne("QuarterlySales.Models.Employee", "Employees")
+                    b.HasOne("QuarterlySales.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Employees");
+                    b.Navigation("Employee");
                 });
 #pragma warning restore 612, 618
         }

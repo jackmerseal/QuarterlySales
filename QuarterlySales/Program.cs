@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using QuarterlySales.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,13 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<SalesContext>(options => 
 	options.UseSqlServer(builder.Configuration.GetConnectionString("QuarterlySalesCS")));
+
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireDigit = false;
+}).AddEntityFrameworkStores<SalesContext>().AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -25,6 +33,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.MapAreaControllerRoute(
+    name: "admin",
+    areaName: "Admin",
+    pattern: "Admin/{controller=User}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
 	name: "default",
