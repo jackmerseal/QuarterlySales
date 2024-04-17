@@ -38,18 +38,52 @@ namespace QuarterlySales.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAdminRole()
+        public async Task<IActionResult> Delete(string id)
         {
-            await roleManager.CreateAsync(new IdentityRole("Admin"));
+            User user = await userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await userManager.DeleteAsync(user);
+                if (!result.Succeeded)
+                {
+                    string errorMessage = "";
+                    foreach (IdentityError error in result.Errors)
+                    {
+                        errorMessage += error.Description + " | ";
+                    }
+                    TempData["message"] = errorMessage;
+                }
+            }
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteRole(string id)
+        [HttpGet]
+        public IActionResult Add()
         {
-            IdentityRole role = await roleManager.FindByIdAsync(id);
-            await roleManager.DeleteAsync(role);
-            return RedirectToAction("Index");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new User { UserName = model.Username };
+                var result = await userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return View(model);
         }
 
         [HttpPost]
@@ -77,22 +111,17 @@ namespace QuarterlySales.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> DeleteRole(string id)
         {
-            User user = await userManager.FindByIdAsync(id);
-            if (user != null)
-            {
-                IdentityResult result = await userManager.DeleteAsync(user);
-                if (!result.Succeeded)
-                {
-                    string errorMessage = "";
-                    foreach (IdentityError error in result.Errors)
-                    {
-                        errorMessage += error.Description + " | ";
-                    }
-                    TempData["message"] = errorMessage;
-                }
-            }
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+            await roleManager.DeleteAsync(role);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAdminRole()
+        {
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
             return RedirectToAction("Index");
         }
     }

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using QuarterlySales.Models;
 using Microsoft.AspNetCore.Identity;
 using QuarterlySales.Models.DomainModels;
+using QuarterlySales.Models.DataLayer.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,13 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using (var scope = scopeFactory.CreateScope())
+{
+    var provider = scope.ServiceProvider;
+    ConfigureIdentity.CreateAdminUserAsync(provider).Wait();
+}
 
 app.MapAreaControllerRoute(
     name: "admin",

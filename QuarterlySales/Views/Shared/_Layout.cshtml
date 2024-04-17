@@ -31,18 +31,15 @@
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Sale" asp-action="Add">Add Sales</a>
+                            </li>
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Add">Add Employee</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Manage" asp-action="Users">Manage Users</a>
-                                </li>
                             }
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Sale" asp-action="Add">Add Sales</a>
-                            </li>
                         }
                     </ul>
                     <ul class="navbar-nav ms-auto">
@@ -53,6 +50,12 @@
                                     <span class="text-dark">Welcome, @User.Identity.Name!</span>
                                 </a>
                             </li>
+                            @if(User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">Manage Users</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <form method="post" asp-action="Logout" asp-controller="Account" asp-area="">
                                     <button type="submit" class="btn btn-link nav-link text-dark">Log Out</button>
