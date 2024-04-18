@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using QuarterlySales.Models;
 using Microsoft.AspNetCore.Identity;
-using QuarterlySales.Models.DomainModels;
 using QuarterlySales.Models.DataLayer.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -41,8 +45,10 @@ var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
 using (var scope = scopeFactory.CreateScope())
 {
     var provider = scope.ServiceProvider;
-    ConfigureIdentity.CreateAdminUserAsync(provider).Wait();
+    await ConfigureIdentity.CreateAdminUserAsync(scope.ServiceProvider);
 }
+
+app.UseSession();
 
 app.MapAreaControllerRoute(
     name: "admin",

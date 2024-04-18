@@ -1,5 +1,9 @@
 ﻿@{
+    var current = ViewContext.RouteData.Values["area"]?.ToString() ??
+       ViewContext.RouteData.Values["controller"]!.ToString()!;
 
+    // use current action to determine active tab for register and change password tabs
+    var action = ViewContext.RouteData.Values["action"]?.ToString()!;
 }
 
 @using Microsoft.AspNetCore.Identity
@@ -15,6 +19,9 @@
     <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/QuarterlySales.styles.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    @RenderSection("scripts", false)
 </head>
 <body>
     <header>
@@ -29,7 +36,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
+                        @using Microsoft.AspNetCore.Identity
+                        @inject SignInManager<User> signInManager
+                        @if (signInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Sale" asp-action="Add">Add Sales</a>
@@ -43,7 +52,7 @@
                         }
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        @if (User.Identity.IsAuthenticated)
+                        @if (signInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark">

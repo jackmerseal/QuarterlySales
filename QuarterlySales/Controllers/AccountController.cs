@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using QuarterlySales.Models.ViewModels;
-using QuarterlySales.Models.DomainModels;
+using QuarterlySales.Models;
 
 namespace Bookstore.Controllers
 {
